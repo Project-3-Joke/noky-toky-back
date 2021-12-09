@@ -1,4 +1,4 @@
-# M3 - `README.md` Example
+# M3 - `README.md`
 
 <br>
 
@@ -15,7 +15,7 @@ This is an app to manage jokes. This app provides icebreakers to a user so they 
 - **Add Joke** As a user I can add a joke
 - **Edit Joke** As a user I can edit a joke
 - **Edit Player profiles** As a user I can edit my profile
-- **View Favourite Joke Table** As a user I want to see the my list of favourite jokes
+- **View Favourite Joke** As a user I want to see the my list of favourite jokes
 - **View Product** As a user I can see the shop to buy merch with jokes
 
 ## Backlog
@@ -43,9 +43,9 @@ Product shop:
 
 | Path                    | Component              | Permissions                | Behavior                                                      |
 | ----------------------- | ---------------------- | -------------------------- | ------------------------------------------------------------- |
-| `/`                     | HomePage/HomePageLogIn | public `<Route>`           | Home page with hidden/display components                      |
 | `/signup`               | SignupPage             | anon only `<AnonRoute>`    | Signup form, link to login, navigate to homepage after signup |
 | `/login`                | LoginPage              | anon only `<AnonRoute>`    | Login form, link to signup, navigate to homepage after login  |
+| `/`                     | HomePage/HomePageLogIn | public `<Route>`           | Home page with hidden/display components                      |
 | `/joke/add`             | HomePageLogIn          | user only `<PrivateRoute>` | Add a joke                                                    |
 | `/user`                 | UserListPage           | user only `<PrivateRoute>` | Fav Joke of a user & History of Shopping & Edit profile       |
 | `/user/edit/:id`        | UserListPage           | user only `<PrivateRoute>` | Edit player for user                                          |
@@ -83,7 +83,7 @@ Product shop:
   - auth.getUser() // synchronous
 - Joke Service
   - Joke.detail(id)
-  - Joke.add(id)
+  - Joke.add
   - Joke.delete(id)
   - Joke.edit(id)
 - User Service
@@ -93,6 +93,7 @@ Product shop:
   - User.history.purchase(id)
 - Product Service
   - Product.put(id)
+  - Product.get(id)
 
 <br>
 
@@ -129,7 +130,7 @@ Product model
   type: [{type: String, required: true}],
   img: {type: String},
   joke: [{type: Schema.Types.ObjectId,ref:'Joke'}],
-  user: [{type: Schema.Types.ObjectId,ref:'User'}]
+  user: {type: Schema.Types.ObjectId,ref:'User'}
   size: {type: String},
   color: {type: String},
 }
@@ -141,7 +142,6 @@ Product model
 
 | HTTP Method | URL                             | Request Body                    | Success status | Error Status | Description                                                                                                                     |
 | ----------- | ------------------------------- | ------------------------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| GET         | `/auth/profile `                | Saved session                   | 200            | 404          | Check if user is logged in and return profile page                                                                              |
 | POST        | `/auth/signup`                  | {name, email, password}         | 201            | 404          | Checks if fields not empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
 | POST        | `/auth/login`                   | {username, password}            | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user in session              |
 | POST        | `/auth/logout`                  | (empty)                         | 204            | 400          | Logs out the user                                                                                                               |
@@ -152,11 +152,13 @@ Product model
 | GET         | `/api/user/:id`                 | {id}                            |                |              | show user profile                                                                                                               |
 | PUT         | `/api/user/:id`                 | {name,email,password}           | 201            | 400          | edit player                                                                                                                     |
 | DELETE      | `/api/user/:id`                 | {id}                            | 200            | 400          | delete player                                                                                                                   |
-| GET         | `/api/user/favourites/:id`      | {id,JokeId}                     |                |              | show user favourite list                                                                                                        |
-| PUT         | `/api/user/favourites/edit/:id` | {id,JokeId}                     |                |              | edit favourite joke [1]                                                                                                         |
+| GET         | `/api/user/favourites/:id`      | {id,jokeId}                     |                |              | show user favourite list                                                                                                        |
+| PUT         | `/api/user/favourites/edit/:id` | {id,jokeId}                     |                |              | edit favourite joke [1]                                                                                                         |
 | POST        | `/api/product/:id`              | {userId,jokeId,type,size,color} |                |              | add product to buy                                                                                                              |
 | PUT         | `/api/product/:id`              | {userId,jokeId,type,size,color} |                |              | edit product to buy                                                                                                             |
 | DELETE      | `/api/product/:id`              | {id}                            |                |              | delete product to buy                                                                                                           |
+| GET         | `/api/product/:id`              | {productId} |                |              | see the product purchased                                                                                                             |
+
 
 <br>
 
