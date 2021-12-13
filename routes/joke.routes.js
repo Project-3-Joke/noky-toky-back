@@ -67,29 +67,29 @@ router.get("/jokes", (req, res, next) => {
 
   // NEEDS TO FIND A WAY TO SORT BY USERID BUT DOES NOT WORK
 
-// const Data = new Promise((resolve, reject) => {
-//     User.findById(req.query.userId)
-//       .then((User) => {
-//         const favorites = new Promise((resolve, reject) => {
-//           Joke.find({
-//             _id: {
-//               $in: User.favorites,
-//             },
-//           }).then((res) => resolve(res));
-//         });
-//         console.log(2);
-//         console.log(favorites);
-//         favorites.then((response) => resolve(response));
-//       })  
-//       .catch((err) => res.json(err));
-//   });
-//   Data.then((res2) => res.json(res2));
+const Data = new Promise((resolve, reject) => {
+    User.findById(req.query.userId)
+      .then((User) => {
+        const favorites = new Promise((resolve, reject) => {
+          Joke.find({
+            _id: {
+              $in: User.favorites,
+            },
+          }).then((res) => resolve(res));
+        });
+        console.log(2);
+        console.log(favorites);
+        favorites.then((response) => resolve(response));
+      })  
+      .catch((err) => res.json(err));
+  });
+  Data.then((res2) => res.json(res2));
 
 
-User.findById(req.query.userId).populate("favorites")
-.then( user => {
-res.json(user.favorites)
-}) 
+// User.findById(req.query.userId).populate("favorites")
+// .then( user => {
+// res.json(user.favorites)
+// }) 
 
 
 });
