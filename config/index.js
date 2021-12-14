@@ -23,6 +23,12 @@ module.exports = (app) => {
     })
   );
 
+  // app.use(
+  //   cors({
+  //     origin: ["https://noky-toky.herokuapp.com"],
+  //   })
+  // );
+
   // In development environment the app logs
   app.use(logger("dev"));
 
