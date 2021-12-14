@@ -17,8 +17,8 @@ app.use("/api", allRoutes);
 // const taskRouter = require("./routes/task.routes");
 // app.use("/api", isAuthenticated, taskRouter);
 
-const productRouter = require("./routes/product.routes");
-app.use("/api", productRouter);
+//const productRouter = require("./routes/product.routes");
+//app.use("/api", productRouter);
 
 const jokeRouter = require("./routes/joke.routes");
 app.use("/api", jokeRouter);
