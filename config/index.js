@@ -19,7 +19,7 @@ module.exports = (app) => {
 
   app.use(
     cors({
-      origin: ["http://localhost:3000"],
+      origin: ["https://noky-toky.herokuapp.com"],
     })
   );
 
