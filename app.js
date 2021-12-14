@@ -23,6 +23,9 @@ app.use("/api", productRouter);
 const jokeRouter = require("./routes/joke.routes");
 app.use("/api", jokeRouter);
 
+const productRouter = require("./routes/product.routes");
+app.use("/api", productRouter);
+
 const authRouter = require("./routes/auth.routes");
 app.use("/auth", authRouter);
 
