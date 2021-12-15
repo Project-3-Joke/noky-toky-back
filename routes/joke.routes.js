@@ -10,9 +10,7 @@ const User = require("../models/User.model");
 router.post("/jokes/new", (req, res, next) => {
   // const { joke, user } = req.body;
   const { setup, delivery, category, user } = req.body;
-  console.log("user from NEW ", user);
-  console.log(req.body);
-
+  
   Joke.create({
     setup: setup,
     delivery: delivery,
@@ -37,7 +35,7 @@ router.post("/jokes", (req, res, next) => {
   // const { joke, user } = req.body;
   const { joke, user } = req.body;
 
-  console.log("user from like", user);
+ 
 
   Joke.create({
     setup: joke.setup,
@@ -60,30 +58,9 @@ router.post("/jokes", (req, res, next) => {
 //  GET /api/jokes -  Retrieves all of the jokes by user
 
 router.get("/jokes", (req, res, next) => {
-  console.log(" body from get", req.params);
-  console.log("User id", req.query.userId);
+  
   const user = req;
-  // console.log("body from front end", user);
-
-  // NEEDS TO FIND A WAY TO SORT BY USERID BUT DOES NOT WORK
-
-  // const Data = new Promise((resolve, reject) => {
-  //     User.findById(req.query.userId)
-  //       .then((User) => {
-  //         const favorites = new Promise((resolve, reject) => {
-  //           Joke.find({
-  //             _id: {
-  //               $in: User.favorites,
-  //             },
-  //           }).then((res) => resolve(res));
-  //         });
-  //         console.log(2);
-  //         console.log(favorites);
-  //         favorites.then((response) => resolve(response));
-  //       })
-  //       .catch((err) => res.json(err));
-  //   });
-  //   Data.then((res2) => res.json(res2));
+  
 
   User.findById(req.query.userId)
     .populate("favorites")
@@ -98,14 +75,6 @@ router.get("/jokes", (req, res, next) => {
 router.delete("/jokes/:id", (req, res, next) => {
   const { id } = req.params;
 
-  // if (!mongoose.Types.ObjectId.isValid(jokeId)) {
-  //   res.status(400).json({ message: "Specified id is not valid" });
-  //   return;
-  console.log("joke from delete", id);
-  // console.log( "req", req.query.userId)
-
-  //  console.log( User.findOneAndDelete( {favorites: [jokeId] } )   )
-
   Joke.findByIdAndRemove(id)
     .then(() =>
       res.json({ message: `Joke with ${id} is removed successfully.` })
@@ -116,14 +85,6 @@ router.delete("/jokes/:id", (req, res, next) => {
 
 router.get("/jokes/:id", (req, res, next) => {
   const { id } = req.params;
-
-  // if (!mongoose.Types.ObjectId.isValid(jokeId)) {
-  //   res.status(400).json({ message: "Specified id is not valid" });
-  //   return;
-  console.log("joke from edit", id);
-  // console.log( "req", req.query.userId)
-
-  //  console.log( User.findOneAndDelete( {favorites: [jokeId] } )   )
 
   Joke.findById(id)
     .then(( joketoedit ) =>
@@ -136,7 +97,6 @@ router.get("/jokes/:id", (req, res, next) => {
 router.put("/jokes/:id", (req, res, next) => {
 
   const { id } = req.params;
-
 
   Joke.findByIdAndUpdate(id, req.body, { new: true })
     .then((updatedjoke) => res.json(updatedjoke))
