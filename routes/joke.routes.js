@@ -113,4 +113,34 @@ router.delete("/jokes/:id", (req, res, next) => {
     .catch((error) => res.json(error));
 });
 
+
+router.get("/jokes/:id", (req, res, next) => {
+  const { id } = req.params;
+
+  // if (!mongoose.Types.ObjectId.isValid(jokeId)) {
+  //   res.status(400).json({ message: "Specified id is not valid" });
+  //   return;
+  console.log("joke from edit", id);
+  // console.log( "req", req.query.userId)
+
+  //  console.log( User.findOneAndDelete( {favorites: [jokeId] } )   )
+
+  Joke.findById(id)
+    .then(( joketoedit ) =>
+      res.json(joketoedit )
+    )
+    .catch((error) => res.json(error));
+});
+
+
+router.put("/jokes/:id", (req, res, next) => {
+
+  const { id } = req.params;
+
+
+  Joke.findByIdAndUpdate(id, req.body, { new: true })
+    .then((updatedjoke) => res.json(updatedjoke))
+    .catch((err) => res.json(err));
+});
+
 module.exports = router;
